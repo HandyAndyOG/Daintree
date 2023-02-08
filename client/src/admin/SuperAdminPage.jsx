@@ -1,6 +1,6 @@
-import StoreOverview from "./StoreOverview.jsx";
-import {allStores} from "../fakedata/fakeStores.js";
-import AddStoreForm from "./AddStoreForm.jsx";
+import StoreOverview from "./StoreOverview";
+import {allStores} from "../fakedata/fakeStores";
+import AddStoreForm from "./AddStoreForm";
 
 function SuperAdminPage() {
     const currentUser = "Best Admin of all";

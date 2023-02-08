@@ -13,7 +13,7 @@ import NavBar from './components/Navbar.jsx';
 import Cart from './components/checkout/Cart.jsx';
 import AdminPage from "./admin/AdminPage.jsx";
 import ProfileBar from "./components/ProfileBar.jsx";
-import ProductList from './components/Products/ProductList.jsx';
+import ProductList from './components/products/ProductList.jsx';
 import LoginForm from './components/login/LoginForm.jsx';
 import NewUserForm from './components/login/NewUserForm.jsx';
 import SuperAdminPage from "./admin/SuperAdminPage.jsx";

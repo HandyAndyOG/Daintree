@@ -1,6 +1,6 @@
-import Product from './Product.jsx';
+import Product from './Product';
 import "../../App.css"
-import CategorySorter from "./CategorySorter.jsx";
+import CategorySorter from "./CategorySorter";
 
 const sorted = false;
 

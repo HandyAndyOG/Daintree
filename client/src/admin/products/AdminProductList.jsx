@@ -1,5 +1,5 @@
-import AdminProduct from './AdminProduct.jsx';
-import AddProductForm from "./AddProductForm.jsx";
+import AdminProduct from './AdminProduct';
+import AddProductForm from "./AddProductForm";
 
 function AdminProductList({products, storeName}) {
     return (
