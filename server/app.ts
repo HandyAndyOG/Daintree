@@ -2,13 +2,13 @@ import express from 'express';
 import { Response, Application } from 'express';
 import request from 'request'
 import cors from 'cors'
-// import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-
 require('dotenv').config();
 
 const app: Application = express();
 const bp = require('body-parser')
+const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
 
 app.use(cors());
 app.use(bp.json());
@@ -22,7 +22,26 @@ app.use(function(_, res: Response, next) {
   next();
 });
 
-app.get('/api/user', (_, res) => {
+const authenticateToken = (req: any, res: any, next: any) => {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+
+  if (!token) { 
+    return res.status(401).send('No valid token')
+  }
+  if (typeof accessTokenSecret === 'string') {
+    jwt.verify(token, accessTokenSecret, (err: any, user: any) => {
+      if (err) {
+        return res.status(403).send('No Access')
+      } 
+      req.user = user
+      next()
+    })
+  }
+}
+
+app.get('/api/user', authenticateToken, (req, res) => {
+  console.log(req.user)
   const options = {
     url: 'http://localhost:8000/api/user',
     method: 'GET',
@@ -60,6 +79,7 @@ app.post('/api/user/register', async (req, res) => {
 
 app.post('/api/user/login/', async (req, res) => {
   const loginPass = req.body.password
+ 
   try {
     const options = {
       url: 'http://localhost:8000/api/user',
@@ -80,13 +100,16 @@ app.post('/api/user/login/', async (req, res) => {
             json: true,
           }
           request(options, async (error, body: any) => {
-            console.log(body.body.data)
             if(error) {
               return res.status(500).send(error);
             }
             try{
               if(await bcrypt.compare(loginPass, body.body.data.password)) {
-                return res.status(200).send('Login Successful')
+                if (typeof accessTokenSecret === 'string') {
+                  const userDetails = {user: req.body.email, role: body.body.data.role}
+                  const accessToken = jwt.sign(userDetails, accessTokenSecret)
+                  return res.status(200).send({ status:'Login Successful', accessToken: accessToken })
+                }
               }
               return res.status(400).send('Invalid password')
             } catch (err) {
@@ -99,5 +122,7 @@ app.post('/api/user/login/', async (req, res) => {
     console.log(err)
   }
 })
+
+
 
 export default app
