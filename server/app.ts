@@ -34,6 +34,7 @@ const authenticateToken = (req: any, res: any, next: any) => {
       if (err) {
         return res.status(403).send('No Access')
       } 
+      console.log(user)
       req.user = user
       next()
     })
@@ -106,7 +107,7 @@ app.post('/api/user/login/', async (req, res) => {
             try{
               if(await bcrypt.compare(loginPass, body.body.data.password)) {
                 if (typeof accessTokenSecret === 'string') {
-                  const userDetails = {user: req.body.email, role: body.body.data.role}
+                  const userDetails = {id: body.body.data.id, user: req.body.email, role: body.body.data.role}
                   const accessToken = jwt.sign(userDetails, accessTokenSecret)
                   return res.status(200).send({ status:'Login Successful', accessToken: accessToken })
                 }
@@ -126,3 +127,19 @@ app.post('/api/user/login/', async (req, res) => {
 
 
 export default app
+
+// app.post('/api/token', (req, res) => {
+//   const refreshToken = req.body.token
+//   if(!refreshToken) return res.status(401).send('No token')
+//   if(!refreshToken.includes(refreshToken)) return res.status(403).send('No token')
+//   if (typeof accessTokenSecret === 'string') {
+//     jwt.verify(refreshToken, accessTokenSecret, (err: any, user: any) => {
+//       if(err) return res.sendStatus(403)
+//       console.log(user)
+//       const accessToken = generateAccessToken({email: user.email, refreshToken: user.refreshToken})
+//       return res.json({ accessToken: accessToken })
+//     })
+    
+//   }
+//   return
+// })

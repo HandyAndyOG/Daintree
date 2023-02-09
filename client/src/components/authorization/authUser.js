@@ -1,4 +1,5 @@
 export const authUser = (token, setLogggedIn) => {
+    console.log(token)
     const headers = {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
