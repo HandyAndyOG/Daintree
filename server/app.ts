@@ -34,17 +34,15 @@ const authenticateToken = (req: any, res: any, next: any) => {
       if (err) {
         return res.status(403).send('No Access')
       } 
-      console.log(user)
       req.user = user
       next()
     })
   }
 }
 
-app.get('/api/user', authenticateToken, (req, res) => {
-  console.log(req.user)
+app.get('/api/user', authenticateToken, (req: any, res) => {
   const options = {
-    url: 'http://localhost:8000/api/user',
+    url: `http://localhost:8000/api/user/${req.user.id}`,
     method: 'GET',
     json: true,
   };
@@ -52,10 +50,11 @@ app.get('/api/user', authenticateToken, (req, res) => {
     if(error) {
       return res.status(500).send(error);
     }
-      return res.status(200).send(body)
+      return res.status(200).send({user: body.body.data.email, id: body.body.data.id, role: body.body.data.role, uniqueStoreId: body.body.data.uniqueStoreId, status: 'success' })
     }
   )
-  })
+})
+
 
 app.post('/api/user/register', async (req, res) => {
   const hashedPass = await bcrypt.hash(req.body.password, 10)
@@ -122,6 +121,51 @@ app.post('/api/user/login/', async (req, res) => {
   } catch (err) {
     console.log(err)
   }
+})
+
+app.get('/api/product', authenticateToken, (_, res) => {
+  const options = {
+    url:'http://localhost:8000/api/product',
+    method: 'GET',
+    json: true
+  }
+  request(options, (error, body: any) => {
+    if(error) {
+      return res.status(500).send(error);
+    }
+    return res.status(200).send(body)
+  })
+})
+
+app.get('/api/store/:id',authenticateToken, (req: any, res) => {
+  const uniqueStoreId = req.params.id
+  console.log(uniqueStoreId)
+  const options = {
+    url:`http://localhost:8000/api/store/${uniqueStoreId}`,
+    method: 'GET',
+    json: true
+  }
+  request(options, (error, body: any) => {
+    if(error) {
+      return res.status(500).send(error);
+    }
+    return res.status(200).send({store: body.body.data, status: body.body.message})
+  })
+})
+
+app.get('/api/store/:id/product',authenticateToken, (req: any, res) => {
+  const uniqueStoreId = req.params.id
+  const options = {
+    url:`http://localhost:8000/api/store/${uniqueStoreId}/product`,
+    method: 'GET',
+    json: true
+  }
+  request(options, (error, body: any) => {
+    if(error) {
+      return res.status(500).send(error);
+    }
+    return res.status(200).send(body.body.data)
+  })
 })
 
 

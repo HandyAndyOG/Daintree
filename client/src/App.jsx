@@ -1,5 +1,6 @@
 import './App.css';
-import {useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react'
+import { UserContext } from './components/context/UserContext'
 
 import {
     BrowserRouter as Router,
@@ -36,6 +37,29 @@ function getCurrentCart() {
 
 function App() {
     const [currentCart, setCurrentCart] = useState(getCurrentCart());
+    const { token, product, setProduct, loggedIn} = useContext(UserContext)
+
+    useEffect(() => {
+        if(token) {
+            const headers = {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            };
+        
+            const requestOptions = {
+                method: 'GET',
+                headers: headers,
+                redirect:'follow'
+            };
+        
+            fetch('http://localhost:8080/api/product', requestOptions)
+                .then(response => response.json())
+                .then(result => setProduct(result.body.data))
+                .catch(error => console.log('error', error));
+        }
+
+    },[token])
+
     return (
         <div className="App">
             <Router>
@@ -47,7 +71,7 @@ function App() {
                     <Route exact path='/create-new-user' element={< NewUserForm/>}></Route>
                     <Route exact path='/login' element={< LoginForm/>}></Route>
                     <Route exact path='/'
-                           element={< ProductList products={fakeProducts} addToCart={addToCart}/>}></Route>
+                           element={< ProductList products={product ? product : fakeProducts} addToCart={addToCart}/>}></Route>
                     <Route exact path='/cart'
                            element={< Cart products={currentCart} removeFromCart={removeFromCart}/>}></Route>
                     <Route exact path='/admin' element={< AdminPage/>}></Route>

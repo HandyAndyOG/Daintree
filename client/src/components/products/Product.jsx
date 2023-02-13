@@ -1,6 +1,10 @@
 import './Product.css'
+import React, { useState, useContext } from 'react'
+import { useEffect } from 'react'
 
-function Product({product, addToCart}) {
+
+const Product = ({product, addToCart }) => {
+
     return (
         <>
             <article className={"product_item"}>
@@ -11,6 +15,8 @@ function Product({product, addToCart}) {
                     <h2>
                         {product.description}
                     </h2>
+                    <p>{product.price}</p>
+                    <p>Quantity: {product.quantity}</p>
                 </section>
                 <img src={product.imageUrl} alt={"picture of product"}/>
                 <button onClick={() => addToCart(product.id)}>Add to Cart</button>
