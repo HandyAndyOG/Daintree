@@ -7,7 +7,7 @@ import {
     Routes,
     Route,
 } from 'react-router-dom';
-
+import { authToken } from './components/authorization/authToken'
 import {fakeProducts} from './fakedata/Fakedata.js';
 import {fakecart} from './fakedata/fakecart.js';
 import NavBar from './components/Navbar.jsx';
@@ -37,10 +37,14 @@ function getCurrentCart() {
 
 function App() {
     const [currentCart, setCurrentCart] = useState(getCurrentCart());
-    const { token, product, setProduct, loggedIn} = useContext(UserContext)
+    const { token, product, setProduct, localstorage, setToken, setLogggedIn, deletedProduct, updatedProduct, addedProductId} = useContext(UserContext)
 
     useEffect(() => {
+        if(!token && localstorage) {
+            setToken(localstorage)
+        }
         if(token) {
+            authToken(token, setLogggedIn)
             const headers = {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -58,7 +62,8 @@ function App() {
                 .catch(error => console.log('error', error));
         }
 
-    },[token])
+
+    },[token, deletedProduct, updatedProduct, addedProductId])
 
     return (
         <div className="App">

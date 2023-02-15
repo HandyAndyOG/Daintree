@@ -1,4 +1,4 @@
-export const authUser = (token, setLogggedIn, navigate) => {
+export const authToken = (token, setLogggedIn) => {
     const headers = {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
@@ -12,6 +12,6 @@ export const authUser = (token, setLogggedIn, navigate) => {
 
     fetch('http://localhost:8080/api/user', requestOptions)
         .then(response => response.json())
-        .then(result => { setLogggedIn(result), result.status === 'success' ? navigate('/') : navigate('/login') })
+        .then(result => setLogggedIn(result))
         .catch(error => console.log('error', error));
 }

@@ -3,9 +3,9 @@ import { UserContext } from './context/UserContext'
 import { useNavigate } from 'react-router-dom'
 
 const ProfileBar = () => {
-  const { token, loggedIn, setStoreName, storeProducts, setStoreProducts} = useContext(UserContext)
+  const { token, loggedIn, setStoreName } = useContext(UserContext)
   const navigate = useNavigate()
-
+  
   const viewStore = () => {
     const headers = {
         'Authorization': `Bearer ${token}`,

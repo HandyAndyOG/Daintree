@@ -139,7 +139,6 @@ app.get('/api/product', authenticateToken, (_, res) => {
 
 app.get('/api/store/:id',authenticateToken, (req: any, res) => {
   const uniqueStoreId = req.params.id
-  console.log(uniqueStoreId)
   const options = {
     url:`http://localhost:8000/api/store/${uniqueStoreId}`,
     method: 'GET',
@@ -165,6 +164,60 @@ app.get('/api/store/:id/product',authenticateToken, (req: any, res) => {
       return res.status(500).send(error);
     }
     return res.status(200).send(body.body.data)
+  })
+})
+
+app.post('/api/store/:id/product',authenticateToken, (req: any, res) => {
+  const uniqueStoreId = req.params.id
+  const options = {
+    url:`http://localhost:8000/api/product/${uniqueStoreId}`,
+    method: 'POST',
+    json: true,
+    body: {
+      title: req.body.title,
+      quantity: req.body.quantity,
+      price: req.body.price,
+      category: req.body.category
+    }
+  }
+  request(options, (error, body: any) => {
+    if(error) {
+      return res.status(500).send(error);
+    }
+    return res.status(200).send(body.body)
+  })
+})
+
+app.patch('/api/product/:id', authenticateToken, (req, res) => {
+  const productID = req.params.id
+  const options = {
+    url:`http://localhost:8000/api/product/${productID}`,
+    method: 'PATCH',
+    json: true,
+    body: {
+      quantity: req.body.quantity
+    }
+  }
+  request(options, (error, body: any) => {
+    if(error) {
+      return res.status(500).send(error);
+    }
+    return res.status(200).send(body.body)
+  })
+})
+
+app.delete('/api/product/:id',authenticateToken, (req: any, res) => {
+  const productID = req.params.id
+  const options = {
+    url:`http://localhost:8000/api/product/${productID}`,
+    method: 'DELETE',
+    json: true,
+  }
+  request(options, (error, body: any) => {
+    if(error) {
+      return res.status(500).send(error);
+    }
+    return res.status(200).send(body.body)
   })
 })
 

@@ -1,6 +1,7 @@
 import AdminProduct from './AdminProduct';
 import AddProductForm from "./AddProductForm";
 
+
 function AdminProductList({products, storeName}) {
     return (
         <div>
