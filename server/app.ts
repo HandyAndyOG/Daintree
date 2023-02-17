@@ -221,6 +221,51 @@ app.delete('/api/product/:id',authenticateToken, (req: any, res) => {
   })
 })
 
+app.get('/api/store', (_, res) => {
+  const options = {
+    url: `http://localhost:8000/api/store`,
+    method: 'GET',
+    json: true
+  }
+  request(options, (error, body: any) => {
+    if (error) {
+      return res.status(500).send(error)
+    }
+    return res.status(200).send(body.body)
+  })
+})
+
+app.post('/api/store', (req, res) => {
+  const options = {
+    url: `http://localhost:8000/api/store`,
+    method: 'POST',
+    json: true,
+    body: { title: req.body.title, adminId: req.body.adminId }
+  }
+  request(options, (error, body: any) => {
+    if (error) {
+      return res.status(500).send(error)
+    }
+    return res.status(200).send(body.body)
+  })
+})
+
+app.delete('/api/store/:id', (req, res) => {
+  const uniqueStoreId = req.params.id
+  console.log(uniqueStoreId)
+  const options = {
+    url: `http://localhost:8000/api/store/${uniqueStoreId}`,
+    method: 'DELETE',
+    json: true,
+  }
+  request(options, (error, body: any) => {
+    if (error) {
+      return res.status(500).send(error)
+    }
+    return res.status(200).send(body.body)
+  })
+})
+
 
 
 export default app

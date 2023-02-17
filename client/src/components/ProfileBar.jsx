@@ -3,7 +3,7 @@ import { UserContext } from './context/UserContext'
 import { useNavigate } from 'react-router-dom'
 
 const ProfileBar = () => {
-  const { token, loggedIn, setStoreName } = useContext(UserContext)
+  const { token, loggedIn, setStoreName, setStores } = useContext(UserContext)
   const navigate = useNavigate()
   
   const viewStore = () => {
@@ -25,11 +25,16 @@ const ProfileBar = () => {
     navigate('/admin')
   }
 
+  const viewStores = () => {
+    navigate('/admin/super')
+  }
+
     return (
         <>
             <div className={"login_info"}>
                 <h1>Logged in as {loggedIn?.role}</h1>
                 {loggedIn?.role === 'admin' ? <button onClick={viewStore}>View Store</button> : ''}
+                <button onClick={viewStores}>View All Stores</button>
             </div>
         </>
     )
