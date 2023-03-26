@@ -79,7 +79,6 @@ app.post('/api/user/register', async (req, res) => {
 
 app.post('/api/user/login/', async (req, res) => {
   const loginPass = req.body.password
- 
   try {
     const options = {
       url: 'http://localhost:8000/api/user',
@@ -188,6 +187,44 @@ app.post('/api/store/:id/product',authenticateToken, (req: any, res) => {
   })
 })
 
+app.get(
+  "/api/user/cart/", authenticateToken,
+  async (req: any, res: Response) => {
+  const userId = req.user.id
+    const options = {
+      url: `http://localhost:8000/api/cart/${userId}`,
+      method: 'GET',
+      json: true,
+    };
+    request(options, (error, body: any) => {
+      if(error) {
+        return res.status(500).send(error);
+      }
+        return res.status(200).send(body)
+      }
+    )
+  }
+);
+
+app.post(
+  "/api/user/cart/:id", authenticateToken,
+  async (req: any, res: Response) => {
+  const cartId = req.params.id
+    const options = {
+      url: `http://localhost:8000/api/cart/${cartId}`,
+      method: 'POST',
+      json: true,
+      body: req.body
+    }
+    request(options, (error, body: any) => {
+      if (error) {
+        return res.status(500).send(error)
+      }
+      return res.status(200).send(body.body)
+    })
+  }
+);
+
 app.patch('/api/product/:id', authenticateToken, (req, res) => {
   const productID = req.params.id
   const options = {
@@ -252,7 +289,6 @@ app.post('/api/store', (req, res) => {
 
 app.delete('/api/store/:id', (req, res) => {
   const uniqueStoreId = req.params.id
-  console.log(uniqueStoreId)
   const options = {
     url: `http://localhost:8000/api/store/${uniqueStoreId}`,
     method: 'DELETE',
@@ -266,22 +302,4 @@ app.delete('/api/store/:id', (req, res) => {
   })
 })
 
-
-
 export default app
-
-// app.post('/api/token', (req, res) => {
-//   const refreshToken = req.body.token
-//   if(!refreshToken) return res.status(401).send('No token')
-//   if(!refreshToken.includes(refreshToken)) return res.status(403).send('No token')
-//   if (typeof accessTokenSecret === 'string') {
-//     jwt.verify(refreshToken, accessTokenSecret, (err: any, user: any) => {
-//       if(err) return res.sendStatus(403)
-//       console.log(user)
-//       const accessToken = generateAccessToken({email: user.email, refreshToken: user.refreshToken})
-//       return res.json({ accessToken: accessToken })
-//     })
-    
-//   }
-//   return
-// })

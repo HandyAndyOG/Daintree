@@ -1,43 +1,66 @@
-import React, { useContext } from 'react'
-import { UserContext } from './context/UserContext'
-import { useNavigate } from 'react-router-dom'
+import React, { useContext } from "react";
+import { UserContext } from "./context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const ProfileBar = () => {
-  const { token, loggedIn, setStoreName, setStores } = useContext(UserContext)
-  const navigate = useNavigate()
-  
+  const { token, loggedIn, setStoreName } = useContext(UserContext);
+  const navigate = useNavigate();
+
   const viewStore = () => {
     const headers = {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     };
 
     const requestOptions = {
-        method: 'GET',
-        headers: headers,
-        redirect:'follow'
+      method: "GET",
+      headers: headers,
+      redirect: "follow",
     };
 
-    fetch(`http://localhost:8080/api/store/${loggedIn.uniqueStoreId}`, requestOptions)
-        .then(response => response.json())
-        .then(result => setStoreName(result))
-        .catch(error => console.log('error', error));
-    navigate('/admin')
-  }
+    fetch(
+      `http://localhost:8080/api/store/${loggedIn.uniqueStoreId}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => setStoreName(result))
+      .catch((error) => console.log("error", error));
+    navigate("/admin");
+  };
 
   const viewStores = () => {
-    navigate('/admin/super')
-  }
+    navigate("/admin/super");
+  };
 
-    return (
-        <>
-            <div className={"login_info"}>
-                <h1>Logged in as {loggedIn?.role}</h1>
-                {loggedIn?.role === 'admin' ? <button onClick={viewStore}>View Store</button> : ''}
-                <button onClick={viewStores}>View All Stores</button>
-            </div>
-        </>
-    )
-}
+  return (
+    <>
+      <div className="flex flex-col p-3">
+        <h1 className="italic text-slate-500 p-3">
+          Logged in as {loggedIn?.role}
+        </h1>
+        {loggedIn?.role === "admin" ? (
+          <button
+            className="ml-3 mr-3 align-middle p-1 rounded-full bg-white text-black ease-in-out duration-300 hover:bg-[#C8B8B4] hover:text-white shadow"
+            onClick={viewStore}
+          >
+            View Store
+          </button>
+        ) : (
+          ""
+        )}
+        {loggedIn?.role === "super-admin" ? (
+          <button
+            className="ml-3 mr-3 align-middle p-1 rounded-full bg-[#C8B8B4] text-white ease-in-out duration-300 hover:bg-white hover:text-black shadow"
+            onClick={viewStores}
+          >
+            View All Stores
+          </button>
+        ) : (
+          ""
+        )}
+      </div>
+    </>
+  );
+};
 
 export default ProfileBar;

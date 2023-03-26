@@ -4,7 +4,7 @@ function CategorySorter({categories, sorterFunction}) {
         <>
             <select placeholder={"user"} id={"type_input"}
                     onChange={(e) => sorterFunction(e.target.value)}
-                    className={"categorySorter"}>
+                    className={"categorySorter mt-5"}>
                 {categories.map(c =>
                     <option value={c}  key={c}>{c}</option>
                 )}

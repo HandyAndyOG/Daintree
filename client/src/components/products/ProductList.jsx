@@ -33,7 +33,7 @@ function ProductList({products, addToCart}) {
     return (
         <>
             <CategorySorter categories={['First Category', 'Second Category']} sorterFunction={sortSomething}/>
-            <section className={"product_list"}>{
+            <section className='grid grid-cols-3 gap-4 pl-20 pr-20'>{
                 sortedProducts
                     .map((p) => {
                         return (

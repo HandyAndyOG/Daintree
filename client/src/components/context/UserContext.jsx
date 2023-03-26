@@ -17,13 +17,16 @@ const UserProvider = ({children}) => {
     const [deletedStore, setDeletedStore] = useState('')
     const [updatedProduct, setUpdatedProduct] = useState('')
     const [addStore, setAddStore] = useState('')
+    const [cartCount, setCartCount] = useState(0)
+    const [cart, setCart] = useState()
+    const [cartId, setCartId] = useState()
 
     useEffect(() => {
       authUser
     }, [])
 
   return (
-    <UserContext.Provider value={{ token, setToken, product, setProduct, loggedIn, setLogggedIn, storeName, setStoreName, storeProducts, setStoreProducts, addedProductId, setAddedProductId, localstorage, setLocalstorage, deletedProduct, setDeletedProduct, updatedProduct, setUpdatedProduct, stores, setStores, addStore, setAddStore, deletedStore, setDeletedStore }}>
+    <UserContext.Provider value={{cartId, setCartId,cart, setCart, cartCount, setCartCount, token, setToken, product, setProduct, loggedIn, setLogggedIn, storeName, setStoreName, storeProducts, setStoreProducts, addedProductId, setAddedProductId, localstorage, setLocalstorage, deletedProduct, setDeletedProduct, updatedProduct, setUpdatedProduct, stores, setStores, addStore, setAddStore, deletedStore, setDeletedStore }}>
       {children}
     </UserContext.Provider>
   )
