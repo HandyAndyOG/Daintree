@@ -3,19 +3,14 @@ import { UserContext } from "./context/UserContext";
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import ProfileBar from "./ProfileBar";
+import logo from "../assets/logo.png";
 import { useNavigate, useLocation } from "react-router-dom";
 
 function NavBar() {
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
-  const {
-    setToken,
-    token,
-    loggedIn,
-    setLogggedIn,
-    setLocalstorage,
-    cartCount,
-  } = useContext(UserContext);
+  const isHomePage = location.pathname === "/";
+  const { setToken, loggedIn, setLogggedIn, setLocalstorage, cartCount } =
+    useContext(UserContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -29,9 +24,14 @@ function NavBar() {
   return (
     <section className="flex flex-col border-b shadow bg-[#dfcdc9] h-auto">
       <nav className="flex flex-row p-5 ">
-        <Link to={"/"} className="text-left text-xl p-3 font-semibold w-2/3">
-          Daintree Store
-        </Link>
+        <div className="w-2/3">
+          <div className="w-[130px]" >
+            <Link to={"/"}>
+              <img className="h-32" src={logo} />
+              <h1 className="text-white text-center mt-[-10px]">DAINTREE</h1>
+            </Link>
+          </div>
+        </div>
         <div className="flex flex-col items-end justify-start w-1/3">
           <div className="flex flex-row items-center">
             {loggedIn ? (
@@ -77,14 +77,19 @@ function NavBar() {
           <ProfileBar />
         </div>
       </nav>
-      {isHomePage ? <div className="flex flex-col ml-20 pb-8">
-        <h3 className="self-start p-4 text-xl">It's time to spoil yourself</h3>
-        <h1 className="self-start p-4 text-5xl leading-5">Get whatever</h1>
-        <h2 className="self-start p-4 text-5xl leading-5">
-          your heart desires.
-        </h2>
-      </div> : '' }
-      
+      {isHomePage ? (
+        <div className="flex flex-col ml-20 pb-8">
+          <h3 className="self-start p-4 text-xl">
+            It's time to spoil yourself
+          </h3>
+          <h1 className="self-start p-4 text-5xl leading-5">Get whatever</h1>
+          <h2 className="self-start p-4 text-5xl leading-5">
+            your heart desires.
+          </h2>
+        </div>
+      ) : (
+        ""
+      )}
     </section>
   );
 }
