@@ -30,7 +30,7 @@ const AdminPage = () => {
         redirect: "follow",
       };
       fetch(
-        `http://localhost:8080/api/store/${id}/product`,
+        `${process.env.REACT_APP_URL}/api/store/${id}/product`,
         requestOptions
       )
         .then((response) => response.json())
@@ -52,7 +52,7 @@ const AdminPage = () => {
         redirect: "follow",
       };
       fetch(
-        `http://localhost:8080/api/store/${id}`,
+        `${process.env.REACT_APP_URL}/api/store/${id}`,
         requestOptions
       )
         .then((response) => response.json())

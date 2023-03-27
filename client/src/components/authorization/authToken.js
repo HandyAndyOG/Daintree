@@ -10,7 +10,7 @@ export const authToken = (token, setLogggedIn) => {
         redirect:'follow'
     };
 
-    fetch('http://localhost:8080/api/user', requestOptions)
+    fetch(`${process.env.REACT_APP_URL}/api/user`, requestOptions)
         .then(response => response.json())
         .then(result => setLogggedIn(result))
         .catch(error => console.log('error', error));

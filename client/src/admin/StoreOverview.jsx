@@ -34,7 +34,7 @@ export default function StoreOverview({ storeInfo }) {
       redirect: "follow",
     };
 
-    fetch(`http://localhost:8080/api/store/${id}`, requestOptions)
+    fetch(`${process.env.REACT_APP_URL}/api/store/${id}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {return(result.message === 'deleted' ? setDeletedStoreB(!deletedStoreB) : '' )})
       .catch((error) => console.log("error", error))
