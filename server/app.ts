@@ -1,7 +1,6 @@
 import express from 'express';
 import { Response, Application } from 'express';
 import request from 'request'
-import cors from 'cors'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 require('dotenv').config();
@@ -10,7 +9,6 @@ const app: Application = express();
 const bp = require('body-parser')
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
 
-app.use(cors());
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
 
