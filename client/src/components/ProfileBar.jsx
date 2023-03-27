@@ -19,7 +19,7 @@ const ProfileBar = () => {
     };
 
     fetch(
-      `${process.env.REACT_APP_URL}/api/store/${loggedIn.uniqueStoreId}`,
+      `${import.meta.env.REACT_APP_URL}/api/store/${loggedIn.uniqueStoreId}`,
       requestOptions
     )
       .then((response) => response.json())

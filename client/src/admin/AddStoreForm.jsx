@@ -27,7 +27,7 @@ const AddStoreForm = () => {
       body: JSON.stringify({ title: storeTitle, adminId: adminId }),
     };
 
-    fetch(`${process.env.REACT_APP_URL}/api/store`, requestOptions)
+    fetch(`${import.meta.env.REACT_APP_URL}/api/store`, requestOptions)
       .then((response) => response.json())
       .then((result) => {return(result.message === 'success' ? setAddStore(!addStore) : '')})
       .catch((error) => console.log("error", error))

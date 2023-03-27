@@ -20,7 +20,7 @@ function SuperAdminPage() {
       redirect: "follow",
     };
 
-    fetch(`${process.env.REACT_APP_URL}/api/store`, requestOptions)
+    fetch(`${import.meta.env.REACT_APP_URL}/api/store`, requestOptions)
       .then((response) => response.json())
       .then((result) => setStores(result.data))
       .catch((error) => console.log("error", error));

@@ -36,7 +36,7 @@ const AddProductForm = () => {
     };
 
     fetch(
-      `${process.env.REACT_APP_URL}/api/store/${loggedIn?.uniqueStoreId}/product`,
+      `${import.meta.env.REACT_APP_URL}/api/store/${loggedIn?.uniqueStoreId}/product`,
       requestOptions
     )
       .then((response) => response.json())

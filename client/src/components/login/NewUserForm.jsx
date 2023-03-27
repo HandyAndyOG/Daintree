@@ -10,7 +10,7 @@ const NewUserForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (confirmPassword === password) {
-    fetch(`${process.env.REACT_APP_URL}/api/user/register`, {
+    fetch(`${import.meta.env.REACT_APP_URL}/api/user/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: email, password: password, role: role })
