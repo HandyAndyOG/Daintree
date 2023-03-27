@@ -11,7 +11,6 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
-    console.log(import.meta.env.VITE_URL)
     e.preventDefault()
     fetch(`${import.meta.env.VITE_URL}/api/user/login`, {
       method: "POST",
