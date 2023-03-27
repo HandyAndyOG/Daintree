@@ -225,6 +225,25 @@ app.post(
   }
 );
 
+app.delete(
+  "/api/user/cart/:id", authenticateToken,
+  async (req: any, res: Response) => {
+  const cartId = req.params.id
+    const options = {
+      url: `http://localhost:8000/api/cart/${cartId}`,
+      method: 'DELETE',
+      json: true,
+      body: req.body
+    }
+    request(options, (error, body: any) => {
+      if (error) {
+        return res.status(500).send(error)
+      }
+      return res.status(200).send(body.body)
+    })
+  }
+);
+
 app.patch('/api/product/:id', authenticateToken, (req, res) => {
   const productID = req.params.id
   const options = {

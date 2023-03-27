@@ -1,10 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { UserContext } from "./context/UserContext";
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import ProfileBar from "./ProfileBar";
 import { useNavigate, useLocation } from "react-router-dom";
-import LoginForm from "./login/LoginForm";
 
 function NavBar() {
   const location = useLocation();
@@ -16,8 +15,6 @@ function NavBar() {
     setLogggedIn,
     setLocalstorage,
     cartCount,
-    cart,
-    setCart,
   } = useContext(UserContext);
   const navigate = useNavigate();
 

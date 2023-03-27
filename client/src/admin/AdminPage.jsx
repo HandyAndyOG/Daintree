@@ -14,30 +14,33 @@ const AdminPage = () => {
     setStoreName,
     deletedProduct,
     updatedProduct,
+    superId,
+    setSuperId
   } = useContext(UserContext);
 
-  useEffect(() => {
-    if (token && loggedIn) {
+  const fetchData = (id) => {
+    if (token && loggedIn && id) {
       const headers = {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       };
-
       const requestOptions = {
         method: "GET",
         headers: headers,
         redirect: "follow",
       };
-
       fetch(
-        `http://localhost:8080/api/store/${loggedIn?.uniqueStoreId}/product`,
+        `http://localhost:8080/api/store/${id}/product`,
         requestOptions
       )
         .then((response) => response.json())
         .then((result) => setStoreProducts(result))
-        .catch((error) => console.log("error", error));
+        .catch((error) => console.log("error", error))
+        .finally(() => {
+          setSuperId('')
+        })
     }
-    if (!storeName && loggedIn) {
+    if (!storeName && loggedIn && id) {
       const headers = {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -48,28 +51,38 @@ const AdminPage = () => {
         headers: headers,
         redirect: "follow",
       };
-
       fetch(
-        `http://localhost:8080/api/store/${loggedIn?.uniqueStoreId}`,
+        `http://localhost:8080/api/store/${id}`,
         requestOptions
       )
         .then((response) => response.json())
         .then((result) => {
-          setStoreName(result), console.log(result);
+          setStoreName(result?.store?.name);
         })
-        .catch((error) => console.log("error", error));
+        .catch((error) => console.log("error", error))
+        .finally(() => {
+          setSuperId('')
+        })
     }
-  }, [token, loggedIn, addedProductId, deletedProduct, updatedProduct]);
+  }
+  useEffect(() => {
+    if(loggedIn?.role === 'super-admin') {
+      fetchData(superId)
+    } else {
+      fetchData(loggedIn?.uniqueStoreId)
+    }
+    
+  }, [token, loggedIn, addedProductId, deletedProduct, updatedProduct, superId]);
 
   if (storeProducts) {
     return (
       <>
-        {loggedIn?.role === "admin" ? (
-          <section>
-            <header>Welcome to the {storeName?.store.name}</header>
+        {loggedIn?.role !== "user" ? (
+          <section className="flex flex-col">
+            <header className="text-lg font-semibold p-2 mt-3">Welcome to the {storeName}</header>
             <AdminProductList
               products={storeProducts}
-              storeName={storeName?.store.name}
+              storeName={storeName}
             />
           </section>
         ) : (

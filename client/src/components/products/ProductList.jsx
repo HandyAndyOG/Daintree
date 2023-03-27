@@ -5,7 +5,6 @@ import CategorySorter from "./CategorySorter";
 const sorted = false;
 
 function sortByCategory(products) {
-    console.log(products)
     return products.sort(compareProductCategory);
 }
 
@@ -35,7 +34,7 @@ function ProductList({products, addToCart}) {
             <CategorySorter categories={['First Category', 'Second Category']} sorterFunction={sortSomething}/>
             <section className='grid grid-cols-3 gap-4 pl-20 pr-20'>{
                 sortedProducts
-                    .map((p) => {
+                    ?.map((p) => {
                         return (
                             <Product key={p.id}
                                      product={p}

@@ -1,11 +1,9 @@
 import CartItem from "./CartItem.jsx";
+import { v4 as uuidv4 } from 'uuid';
 
 let sumOfItems = 0;
-const numberize = (str) => {
-  const string = str.replace(/\$/gm, "");
-  return Number(string);
-};
 function Cart({ products, removeFromCart }) {
+
   if (products?.length === 0) {
     return <h3>No items in cart, why not add some?</h3>;
   }
@@ -13,9 +11,9 @@ function Cart({ products, removeFromCart }) {
     <section className="flex flex-row justify-center">
       <div className="flex flex-col items-center">
         {products?.map((p) => {
-          sumOfItems += numberize(p.price) * p.amount;
+          sumOfItems += Number(p?.price.replace(/\$/gm, "")) * p.amount;
           return (
-            <CartItem key={p.id} product={p} removeFromCart={removeFromCart} />
+            <CartItem key={uuidv4()} product={p} removeFromCart={removeFromCart} />
           );
         })}
       </div>
