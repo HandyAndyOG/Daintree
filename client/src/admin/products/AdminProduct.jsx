@@ -39,7 +39,7 @@ const AdminProduct = ({ product }) => {
         headers: headers,
       };
 
-      fetch(`${import.meta.env.REACT_APP_URL}/api/product/${id}`, requestOptions)
+      fetch(`${import.meta.env.VITE_URL}/api/product/${id}`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           return result.message === "deleted"
@@ -66,7 +66,7 @@ const AdminProduct = ({ product }) => {
         body: JSON.stringify({ quantity: updatedQuantity }),
       };
 
-      fetch(`${import.meta.env.REACT_APP_URL}/api/product/${productId}`, requestOptions)
+      fetch(`${import.meta.env.VITE_URL}/api/product/${productId}`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
           return result.status === "success"

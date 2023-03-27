@@ -34,7 +34,7 @@ export default function StoreOverview({ storeInfo }) {
       redirect: "follow",
     };
 
-    fetch(`${import.meta.env.REACT_APP_URL}/api/store/${id}`, requestOptions)
+    fetch(`${import.meta.env.VITE_URL}/api/store/${id}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {return(result.message === 'deleted' ? setDeletedStoreB(!deletedStoreB) : '' )})
       .catch((error) => console.log("error", error))

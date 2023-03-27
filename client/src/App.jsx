@@ -59,7 +59,7 @@ function App() {
         headers: headers,
         body: JSON.stringify({ id: itemId }),
       };
-      fetch(`${import.meta.env.REACT_APP_URL}/api/user/cart/${cartId}`, requestOptions)
+      fetch(`${import.meta.env.VITE_URL}/api/user/cart/${cartId}`, requestOptions)
         .then((response) => response.json())
         .then((data) => {
           return data.message === "deleted" ? setDelCart(!delCart) : "";
@@ -93,7 +93,7 @@ function App() {
         headers: headers,
         body: JSON.stringify(addProduct),
       };
-      fetch(`${import.meta.env.REACT_APP_URL}/api/user/cart/${cartId}`, requestOptions)
+      fetch(`${import.meta.env.VITE_URL}/api/user/cart/${cartId}`, requestOptions)
         .then((response) => response.json())
         .then((data) => {
           return data.message === "success" ? setAddCart(!addCart) : "";
@@ -122,13 +122,13 @@ function App() {
         redirect: "follow",
       };
 
-      fetch(`${import.meta.env.REACT_APP_URL}/api/product`, requestOptions)
+      fetch(`${import.meta.env.VITE_URL}/api/product`, requestOptions)
         .then((response) => response.json())
         .then((result) => setProduct(result.body.data))
         .catch((error) => console.log("error", error));
 
       if (loggedIn?.role === "user") {
-        fetch(`${import.meta.env.REACT_APP_URL}/api/user/cart/`, requestOptions)
+        fetch(`${import.meta.env.VITE_URL}/api/user/cart/`, requestOptions)
           .then((response) => response.json())
           .then((result) => {
             result.body.data.items !== "[]"

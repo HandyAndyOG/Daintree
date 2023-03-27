@@ -11,8 +11,9 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
-    e.preventDefault();
-    fetch(`${import.meta.env.REACT_APP_URL}/api/user/login`, {
+    console.log(import.meta.env.VITE_URL)
+    e.preventDefault()
+    fetch(`${import.meta.env.VITE_URL}/api/user/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: loginEmail, password: loginPassword }),
