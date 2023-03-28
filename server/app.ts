@@ -13,8 +13,10 @@ const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
 app.use(cors({
-  origin: 'https://silver-macaron-ef4571.netlify.app'
+  origin: 'http://127.0.0.1:5173'
 }));
+// origin: 'https://silver-macaron-ef4571.netlify.app'
+
 
 const authenticateToken = (req: any, res: any, next: any) => {
   const authHeader = req.headers['authorization']
@@ -121,7 +123,6 @@ app.post('/api/user/login/', async (req, res) => {
 
 app.get('/api/product/page/:page_number', (req, res) => {
   const page_number = req.params.page_number
-  console.log(page_number)
   const options = {
     url:`${process.env.SERVER_URL}/api/product/page/${page_number}`,
     method: 'GET',

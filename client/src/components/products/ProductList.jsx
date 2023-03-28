@@ -32,7 +32,7 @@ function ProductList({products, addToCart}) {
     return (
         <>
             <Pagination />
-            <section className='grid grid-cols-3 gap-4 pl-20 pr-20'>{
+            <section className='grid grid-cols-4 gap-4 pl-20 pr-20 pb-10'>{
                 sortedProducts
                     ?.map((p) => {
                         return (
@@ -42,6 +42,7 @@ function ProductList({products, addToCart}) {
                     })
             }
             </section>
+            <Pagination />
         </>)
 }
 

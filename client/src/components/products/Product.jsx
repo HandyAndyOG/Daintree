@@ -10,13 +10,13 @@ const Product = ({ product, addToCart }) => {
           {product.title}
         </h1>
         <img
-          className="object-contain"
+          className=" object-contain"
           src={product.imageUrl}
           alt={"picture of product"}
         />
         <div className="flex flex-row p-5 items-center">
           <div className="p-2">
-            <h2 className="text-start">{product.description}</h2>
+            <p className="text-start overflow-hidden max-h-52">{product.description}</p>
           </div>
           <div className="p-2">
             <p>{product.price}</p>
