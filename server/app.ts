@@ -14,6 +14,7 @@ app.use(bp.urlencoded({ extended: true }));
 
 app.use(function(_, res, next) {
   res.header("Access-Control-Allow-Origin", `${process.env.FRONT_URL}`);
+  res.header("Access-Control-Allow-Methods", "POST, GET, DELETE, PATCH");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
