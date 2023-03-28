@@ -159,7 +159,7 @@ function App() {
       .then((response) => response.json())
       .then((result) => setProduct(result.body.data))
       .catch((error) => console.log("error", error));
-  }, []);
+  }, [currentPage]);
 
   return (
     <div className="App">

@@ -1,6 +1,6 @@
 import Product from './Product';
 import "../../App.css"
-import CategorySorter from "./CategorySorter";
+import Pagination from './Pagination';
 
 const sorted = false;
 
@@ -31,7 +31,7 @@ function ProductList({products, addToCart}) {
     }
     return (
         <>
-            <CategorySorter categories={['First Category', 'Second Category']} sorterFunction={sortSomething}/>
+            <Pagination />
             <section className='grid grid-cols-3 gap-4 pl-20 pr-20'>{
                 sortedProducts
                     ?.map((p) => {
