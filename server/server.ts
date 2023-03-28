@@ -1,6 +1,7 @@
 import app from './app';
-const port = 8080;
+require('dotenv').config();
 
-app.listen(port, (): void => {
-  console.log(`Server listening on port ${port}`);
+
+app.listen(process.env.PORT, (): void => {
+  console.log(`Server listening on port ${process.env.PORT}`);
 });
