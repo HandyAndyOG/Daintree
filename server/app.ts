@@ -4,6 +4,8 @@ import request from 'request'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import cors from 'cors'
+import axios from 'axios'
+const pako = require('pako');
 require('dotenv').config();
 
 const app: Application = express();
@@ -120,20 +122,37 @@ app.post('/api/user/login/', async (req, res) => {
   }
 })
 
-app.get('/api/product/page/:page_number', (req, res) => {
-  const page_number = req.params.page_number
-  const options = {
-    url:`${process.env.SERVER_URL}/api/product/page/${page_number}`,
-    method: 'GET',
-    json: true
+// app.get('/api/product/page/:page_number', (req, res) => {
+//   const page_number = req.params.page_number
+//   const options = {
+//     url:`${process.env.SERVER_URL}/api/product/page/${page_number}`,
+//     method: 'GET',
+//     json: true
+//   }
+//   request(options, (error, body: any) => {
+//     if(error) {
+//       return res.status(500).send(error);
+//     }
+//     return res.status(200).send(body)
+//   })
+// })
+
+app.get('/api/product/page/:page_number', async (req, res) => {
+  const page_number = req.params.page_number;
+  try {
+    const response = await axios.get(`${process.env.SERVER_URL}/api/product/page/${page_number}`, {
+      responseType: 'arraybuffer',
+      headers: {
+        'Accept-Encoding': 'gzip',
+      },
+    });
+    const data = pako.ungzip(response.data, { to: 'string' });
+    res.status(200).send(data);
+  } catch (error) {
+    res.status(500).send(error);
   }
-  request(options, (error, body: any) => {
-    if(error) {
-      return res.status(500).send(error);
-    }
-    return res.status(200).send(body)
-  })
-})
+});
+
 
 app.get('/api/store/:id',authenticateToken, (req: any, res) => {
   const uniqueStoreId = req.params.id
