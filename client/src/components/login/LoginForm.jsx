@@ -25,10 +25,12 @@ const LoginForm = () => {
           localStorage.setItem("token", data.accessToken);
         }
       })
-      .catch((err) => console.log(err));
-    setLoginEmail("");
-    setLoginPassword("");
-    setCheckbox(false);
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setLoginEmail("");
+        setLoginPassword("");
+        setCheckbox(false);
+      })
   };
 
   return (
