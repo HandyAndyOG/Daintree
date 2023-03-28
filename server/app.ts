@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import cors from 'cors'
 // import { createProxyMiddleware } from 'http-proxy-middleware';
-import https from 'https';
+// import https from 'https';
 require('dotenv').config();
 
 const app: Application = express();
@@ -18,19 +18,19 @@ app.use(cors({
   origin: 'https://silver-macaron-ef4571.netlify.app'
 }));
 
-app.use('/api', (req, res) => {
-  const proxy = https.request('https://daintree-production.up.railway.app', {
-    ...req,
-    headers: {
-      ...req.headers,
-      host: 'daintree-production.up.railway.app'
-    }
-  }, (response: any) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://silver-macaron-ef4571.netlify.app');
-    response.pipe(res);
-  });
-  req.pipe(proxy);
-});
+// app.use('/api', (req, res) => {
+//   const proxy = https.request('https://daintree-production.up.railway.app', {
+//     ...req,
+//     headers: {
+//       ...req.headers,
+//       host: 'daintree-production.up.railway.app'
+//     }
+//   }, (response: any) => {
+//     res.setHeader('Access-Control-Allow-Origin', 'https://silver-macaron-ef4571.netlify.app');
+//     response.pipe(res);
+//   });
+//   req.pipe(proxy);
+// });
 
 // app.use(function(_, res, next) {
 //   res.header("Access-Control-Allow-Origin", `${process.env.FRONT_URL}`);
@@ -59,7 +59,7 @@ const authenticateToken = (req: any, res: any, next: any) => {
 
 app.get('/api/user', authenticateToken, (req: any, res) => {
   const options = {
-    url: `${process.env.SERVER_URL}/api/user/${req.user.id}`,
+    url: `https://daintree-server-production.up.railway.app/api/user/${req.user.id}`,
     method: 'GET',
     json: true,
   };
@@ -76,7 +76,7 @@ app.get('/api/user', authenticateToken, (req: any, res) => {
 app.post('/api/user/register', async (req, res) => {
   const hashedPass = await bcrypt.hash(req.body.password, 10)
   const options = {
-    url: `${process.env.SERVER_URL}/api/user`,
+    url: `https://daintree-server-production.up.railway.app/api/user`,
     method: 'POST',
     json: true,
     body: {
@@ -98,7 +98,7 @@ app.post('/api/user/login/', async (req, res) => {
   const loginPass = req.body.password
   try {
     const options = {
-      url: `${process.env.SERVER_URL}/api/user`,
+      url: `https://daintree-server-production.up.railway.app/api/user`,
       method: 'GET',
       json: true,
     };
@@ -111,7 +111,7 @@ app.post('/api/user/login/', async (req, res) => {
         return res.status(400).send("Cannot find user")
       }
       const options = {
-            url: `${process.env.SERVER_URL}/api/user/${user.id}`,
+            url: `https://daintree-server-production.up.railway.app/api/user/${user.id}`,
             method: 'GET',
             json: true,
           }
@@ -141,7 +141,7 @@ app.post('/api/user/login/', async (req, res) => {
 
 app.get('/api/product', authenticateToken, (_, res) => {
   const options = {
-    url:`${process.env.SERVER_URL}/api/product`,
+    url:`https://daintree-server-production.up.railway.app/api/product`,
     method: 'GET',
     json: true
   }
@@ -156,7 +156,7 @@ app.get('/api/product', authenticateToken, (_, res) => {
 app.get('/api/store/:id',authenticateToken, (req: any, res) => {
   const uniqueStoreId = req.params.id
   const options = {
-    url:`${process.env.SERVER_URL}/api/store/${uniqueStoreId}`,
+    url:`https://daintree-server-production.up.railway.app/api/store/${uniqueStoreId}`,
     method: 'GET',
     json: true
   }
@@ -171,7 +171,7 @@ app.get('/api/store/:id',authenticateToken, (req: any, res) => {
 app.get('/api/store/:id/product',authenticateToken, (req: any, res) => {
   const uniqueStoreId = req.params.id
   const options = {
-    url:`${process.env.SERVER_URL}/api/store/${uniqueStoreId}/product`,
+    url:`https://daintree-server-production.up.railway.app/api/store/${uniqueStoreId}/product`,
     method: 'GET',
     json: true
   }
@@ -186,7 +186,7 @@ app.get('/api/store/:id/product',authenticateToken, (req: any, res) => {
 app.post('/api/store/:id/product',authenticateToken, (req: any, res) => {
   const uniqueStoreId = req.params.id
   const options = {
-    url:`${process.env.SERVER_URL}/api/product/${uniqueStoreId}`,
+    url:`https://daintree-server-production.up.railway.app/api/product/${uniqueStoreId}`,
     method: 'POST',
     json: true,
     body: {
@@ -209,7 +209,7 @@ app.get(
   async (req: any, res: Response) => {
   const userId = req.user.id
     const options = {
-      url: `${process.env.SERVER_URL}/api/cart/${userId}`,
+      url: `https://daintree-server-production.up.railway.app/api/cart/${userId}`,
       method: 'GET',
       json: true,
     };
@@ -228,7 +228,7 @@ app.post(
   async (req: any, res: Response) => {
   const cartId = req.params.id
     const options = {
-      url: `${process.env.SERVER_URL}/api/cart/${cartId}`,
+      url: `https://daintree-server-production.up.railway.app/api/cart/${cartId}`,
       method: 'POST',
       json: true,
       body: req.body
@@ -247,7 +247,7 @@ app.delete(
   async (req: any, res: Response) => {
   const cartId = req.params.id
     const options = {
-      url: `${process.env.SERVER_URL}/api/cart/${cartId}`,
+      url: `https://daintree-server-production.up.railway.app/api/cart/${cartId}`,
       method: 'DELETE',
       json: true,
       body: req.body
@@ -264,7 +264,7 @@ app.delete(
 app.patch('/api/product/:id', authenticateToken, (req, res) => {
   const productID = req.params.id
   const options = {
-    url:`${process.env.SERVER_URL}/api/product/${productID}`,
+    url:`https://daintree-server-production.up.railway.app/api/product/${productID}`,
     method: 'PATCH',
     json: true,
     body: {
@@ -282,7 +282,7 @@ app.patch('/api/product/:id', authenticateToken, (req, res) => {
 app.delete('/api/product/:id',authenticateToken, (req: any, res) => {
   const productID = req.params.id
   const options = {
-    url:`${process.env.SERVER_URL}/api/product/${productID}`,
+    url:`https://daintree-server-production.up.railway.app/api/product/${productID}`,
     method: 'DELETE',
     json: true,
   }
@@ -296,7 +296,7 @@ app.delete('/api/product/:id',authenticateToken, (req: any, res) => {
 
 app.get('/api/store', (_, res) => {
   const options = {
-    url: `${process.env.SERVER_URL}/api/store`,
+    url: `https://daintree-server-production.up.railway.app/api/store`,
     method: 'GET',
     json: true
   }
@@ -310,7 +310,7 @@ app.get('/api/store', (_, res) => {
 
 app.post('/api/store', (req, res) => {
   const options = {
-    url: `${process.env.SERVER_URL}/api/store`,
+    url: `https://daintree-server-production.up.railway.app/api/store`,
     method: 'POST',
     json: true,
     body: { title: req.body.title, adminId: req.body.adminId }
@@ -326,7 +326,7 @@ app.post('/api/store', (req, res) => {
 app.delete('/api/store/:id', (req, res) => {
   const uniqueStoreId = req.params.id
   const options = {
-    url: `${process.env.SERVER_URL}/api/store/${uniqueStoreId}`,
+    url: `https://daintree-server-production.up.railway.app/api/store/${uniqueStoreId}`,
     method: 'DELETE',
     json: true,
   }
