@@ -76,6 +76,7 @@ app.post('/api/user/register', async (req, res) => {
 
 app.post('/api/user/login/', async (req, res) => {
   const loginPass = req.body.password
+  console.log(loginPass)
   try {
     const options = {
       url: `${process.env.SERVER_URL}/api/user`,
