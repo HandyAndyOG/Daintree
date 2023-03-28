@@ -119,9 +119,11 @@ app.post('/api/user/login/', async (req, res) => {
   }
 })
 
-app.get('/api/product', authenticateToken, (_, res) => {
+app.get('/api/product/page/:page_number', (req, res) => {
+  const page_number = req.params.page_number
+  console.log(page_number)
   const options = {
-    url:`${process.env.SERVER_URL}/api/product`,
+    url:`${process.env.SERVER_URL}/api/product/page/${page_number}`,
     method: 'GET',
     json: true
   }

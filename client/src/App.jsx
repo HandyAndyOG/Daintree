@@ -35,6 +35,8 @@ function App() {
     cart,
     setCart,
     setCartCount,
+    currentPage,
+    setCurrentPage,
   } = useContext(UserContext);
 
   const addedToCartMessage = () => {
@@ -59,7 +61,10 @@ function App() {
         headers: headers,
         body: JSON.stringify({ id: itemId }),
       };
-      fetch(`${import.meta.env.VITE_URL}/api/user/cart/${cartId}`, requestOptions)
+      fetch(
+        `${import.meta.env.VITE_URL}/api/user/cart/${cartId}`,
+        requestOptions
+      )
         .then((response) => response.json())
         .then((data) => {
           return data.message === "deleted" ? setDelCart(!delCart) : "";
@@ -93,7 +98,10 @@ function App() {
         headers: headers,
         body: JSON.stringify(addProduct),
       };
-      fetch(`${import.meta.env.VITE_URL}/api/user/cart/${cartId}`, requestOptions)
+      fetch(
+        `${import.meta.env.VITE_URL}/api/user/cart/${cartId}`,
+        requestOptions
+      )
         .then((response) => response.json())
         .then((data) => {
           return data.message === "success" ? setAddCart(!addCart) : "";
@@ -109,7 +117,7 @@ function App() {
     if (!token && localstorage) {
       setToken(localstorage);
     }
-    if (token) {
+    if (loggedIn?.role === "user" && token) {
       authToken(token, setLogggedIn);
       const headers = {
         Authorization: `Bearer ${token}`,
@@ -122,23 +130,16 @@ function App() {
         redirect: "follow",
       };
 
-      fetch(`${import.meta.env.VITE_URL}/api/product`, requestOptions)
+      fetch(`${import.meta.env.VITE_URL}/api/user/cart/`, requestOptions)
         .then((response) => response.json())
-        .then((result) => setProduct(result.body.data))
+        .then((result) => {
+          result.body.data.items !== "[]"
+            ? (setCart(JSON.parse(result.body.data.items)),
+              setCartCount(JSON.parse(result.body.data.items).length),
+              setCartId(result.body.data.id))
+            : (setCart([]), setCartCount(0), setCartId(result.body.data.id));
+        })
         .catch((error) => console.log("error", error));
-
-      if (loggedIn?.role === "user") {
-        fetch(`${import.meta.env.VITE_URL}/api/user/cart/`, requestOptions)
-          .then((response) => response.json())
-          .then((result) => {
-            result.body.data.items !== "[]"
-              ? (setCart(JSON.parse(result.body.data.items)),
-                setCartCount(JSON.parse(result.body.data.items).length),
-                setCartId(result.body.data.id))
-              : (setCart([]), setCartCount(0), setCartId(result.body.data.id));
-          })
-          .catch((error) => console.log("error", error));
-      }
     }
   }, [
     token,
@@ -149,6 +150,16 @@ function App() {
     delCart,
     deletedStoreB,
   ]);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_URL}/api/product/page/${currentPage}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((result) => setProduct(result.body.data))
+      .catch((error) => console.log("error", error));
+  }, []);
 
   return (
     <div className="App">

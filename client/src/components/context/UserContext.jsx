@@ -25,6 +25,7 @@ const UserProvider = ({ children }) => {
   const [addCart, setAddCart] = useState(false);
   const [delCart, setDelCart] = useState(false);
   const [superId, setSuperId] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     authUser;
@@ -33,6 +34,8 @@ const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
+        currentPage,
+        setCurrentPage,
         superId,
         setSuperId,
         addCart,
@@ -67,8 +70,8 @@ const UserProvider = ({ children }) => {
         setStores,
         addStore,
         setAddStore,
-        deletedStoreB, 
-        setDeletedStoreB
+        deletedStoreB,
+        setDeletedStoreB,
       }}
     >
       {children}
