@@ -1,5 +1,5 @@
 import express from 'express';
-import { Response, Application } from 'express';
+import { Response, Application, Request } from 'express';
 import request from 'request'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
@@ -56,6 +56,9 @@ const authenticateToken = (req: any, res: any, next: any) => {
     })
   }
 }
+app.get('/api', (_: Request, res: Response) => {
+  res.status(200).send('Server is running')
+})
 
 app.get('/api/user', authenticateToken, (req: any, res) => {
   const options = {
