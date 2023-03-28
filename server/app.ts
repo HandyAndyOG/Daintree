@@ -3,6 +3,7 @@ import { Response, Application } from 'express';
 import request from 'request'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+import cors from 'cors'
 require('dotenv').config();
 
 const app: Application = express();
@@ -11,13 +12,16 @@ const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
 
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
+app.use(cors({
+  origin: `${process.env.FRONT_URL}`
+}))
 
-app.use(function(_, res, next) {
-  res.header("Access-Control-Allow-Origin", `${process.env.FRONT_URL}`);
+// app.use(function(_, res, next) {
+//   res.header("Access-Control-Allow-Origin", `${process.env.FRONT_URL}`);
   // res.header("Access-Control-Allow-Methods", "POST, GET, DELETE, PATCH");
   // res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
+//   next();
+// });
 
 const authenticateToken = (req: any, res: any, next: any) => {
   const authHeader = req.headers['authorization']
