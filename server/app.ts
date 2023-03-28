@@ -4,8 +4,6 @@ import request from 'request'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import cors from 'cors'
-// import { createProxyMiddleware } from 'http-proxy-middleware';
-// import https from 'https';
 require('dotenv').config();
 
 const app: Application = express();
@@ -15,29 +13,8 @@ const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
 app.use(cors({
-  origin: 'https://silver-macaron-ef4571.netlify.app'
+  origin: `${process.env.FRONT_URL}`
 }));
-
-// app.use('/api', (req, res) => {
-//   const proxy = https.request('https://daintree-production.up.railway.app', {
-//     ...req,
-//     headers: {
-//       ...req.headers,
-//       host: 'daintree-production.up.railway.app'
-//     }
-//   }, (response: any) => {
-//     res.setHeader('Access-Control-Allow-Origin', 'https://silver-macaron-ef4571.netlify.app');
-//     response.pipe(res);
-//   });
-//   req.pipe(proxy);
-// });
-
-// app.use(function(_, res, next) {
-//   res.header("Access-Control-Allow-Origin", `${process.env.FRONT_URL}`);
-  // res.header("Access-Control-Allow-Methods", "POST, GET, DELETE, PATCH");
-  // res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//   next();
-// });
 
 const authenticateToken = (req: any, res: any, next: any) => {
   const authHeader = req.headers['authorization']
