@@ -4,6 +4,7 @@ import request from 'request'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import cors from 'cors'
+import { createProxyMiddleware } from 'http-proxy-middleware';
 require('dotenv').config();
 
 const app: Application = express();
@@ -12,9 +13,12 @@ const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
 
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
-app.use(cors({
-  origin: `${process.env.FRONT_URL}`
-}))
+app.use(cors())
+
+app.use('/api', createProxyMiddleware({
+  target: 'https://silver-macaron-ef4571.netlify.app/',
+  changeOrigin: true,
+}));
 
 // app.use(function(_, res, next) {
 //   res.header("Access-Control-Allow-Origin", `${process.env.FRONT_URL}`);
