@@ -13,9 +13,8 @@ const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
 app.use(cors({
-  origin: 'http://127.0.0.1:5173'
+  origin: 'https://silver-macaron-ef4571.netlify.app'
 }));
-// origin: 'https://silver-macaron-ef4571.netlify.app'
 
 
 const authenticateToken = (req: any, res: any, next: any) => {
