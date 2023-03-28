@@ -13,9 +13,9 @@ app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
 
 app.use(function(_, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "POST, GET, DELETE, PATCH");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Origin", `${process.env.FRONT_URL}`);
+  // res.header("Access-Control-Allow-Methods", "POST, GET, DELETE, PATCH");
+  // res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
 
@@ -76,7 +76,6 @@ app.post('/api/user/register', async (req, res) => {
 
 app.post('/api/user/login/', async (req, res) => {
   const loginPass = req.body.password
-  console.log(loginPass)
   try {
     const options = {
       url: `${process.env.SERVER_URL}/api/user`,
