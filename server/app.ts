@@ -126,27 +126,13 @@ app.post('/api/user/login/', async (req, res) => {
   }
 })
 
-// app.get('/api/product/page/:page_number', (req, res) => {
-//   const page_number = req.params.page_number
-//   const options = {
-//     url:`${process.env.SERVER_URL}/api/product/page/${page_number}`,
-//     method: 'GET',
-//     json: true
-//   }
-//   request(options, (error, body: any) => {
-//     if(error) {
-//       return res.status(500).send(error);
-//     }
-//     return res.status(200).send(body)
-//   })
-// })
 app.get('/api/product/page/:page_number', (req, res) => {
   const page_number = req.params.page_number;
   const options = {
     url: `${process.env.SERVER_URL}/api/product/page/${page_number}`,
     method: 'GET',
     json: true,
-    gzip: true // Add this line to enable gzip compression
+    gzip: true
   };
   request(options, (error, body) => {
     if (error) {
@@ -155,9 +141,6 @@ app.get('/api/product/page/:page_number', (req, res) => {
     return res.json(body);
   });
 });
-
-
-
 
 app.get('/api/store/:id',authenticateToken, (req: any, res) => {
   const uniqueStoreId = req.params.id
