@@ -7,7 +7,7 @@ function AdminProductList({ products, storeName }) {
       <header className="mb-3">The items in {storeName}</header>
       <AddProductForm />
       <section className="grid grid-cols-4 mt-5 ml-4 mr-4 gap-4">
-        {products.map((p) => {
+        {products?.map((p) => {
           return <AdminProduct key={p.id} product={p} />;
         })}
       </section>

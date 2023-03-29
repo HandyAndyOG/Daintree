@@ -86,21 +86,21 @@ const AdminProduct = ({ product }) => {
   return (
     <article className="flex flex-col shadow">
       <div className="flex flex-row justify-between p-2 m-1">
-        <h1 className="text-left font-bold">{product.title}</h1>
+        <h1 className="text-left font-bold">{product?.title}</h1>
         <button
           className="px-2 h-6 rounded-full bg-[#C8B8B4] text-white ease-in-out duration-300 hover:bg-white hover:text-black shadow"
-          onClick={() => deleteProduct(product.id)}
+          onClick={() => deleteProduct(product?.id)}
         >
           X
         </button>
       </div>
 
-      <img src={product.imageUrl} alt={"picture of product"} />
-      <p className="p-2 text-left">{product.description}</p>
-      <p className="text-left p-2">{product.price}</p>
+      <img src={product?.imageUrl} alt={"picture of product"} />
+      <p className="p-2 text-left">{product?.description}</p>
+      <p className="text-left p-2">{product?.price}</p>
       <div className="flex flex-row p-2 items-center">
         <p className="whitespace-nowrap font-semibold">
-          Quantity: {product.quantity}
+          Quantity: {product?.quantity}
         </p>
         {update ? (
           <>
@@ -111,7 +111,7 @@ const AdminProduct = ({ product }) => {
               value={updatedQuantity}
               onChange={(e) => setUpdatedQuantity(e.target.value)}
             />{" "}
-            <AiOutlineCheck onClick={() => updateQuantity(product.id)} />
+            <AiOutlineCheck onClick={() => updateQuantity(product?.id)} />
           </>
         ) : (
           <AiOutlineEdit
