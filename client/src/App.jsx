@@ -116,9 +116,9 @@ function App() {
   useEffect(() => {
     if (!token && localstorage) {
       setToken(localstorage);
+      authToken(localstorage, setLogggedIn);
     }
     if (loggedIn?.role === "user" && token) {
-      authToken(token, setLogggedIn);
       const headers = {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -133,13 +133,21 @@ function App() {
       fetch(`${import.meta.env.VITE_URL}/api/user/cart/`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
-          result.body.data.items !== "[]"
+          return (result.body.data.items !== "[]"
             ? (setCart(JSON.parse(result.body.data.items)),
               setCartCount(JSON.parse(result.body.data.items).length),
               setCartId(result.body.data.id))
-            : (setCart([]), setCartCount(0), setCartId(result.body.data.id));
+            : (setCart([]), setCartCount(0), setCartId(result.body.data.id)));
         })
         .catch((error) => console.log("error", error));
+
+        fetch(`${import.meta.env.VITE_URL}/api/product/page/${currentPage}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((response) => response.json())
+          .then((result) => {setProduct(result.body)})
+          .catch((error) => console.log("error", error));
     }
   }, [
     token,
@@ -149,6 +157,7 @@ function App() {
     addCart,
     delCart,
     deletedStoreB,
+    loggedIn
   ]);
 
   useEffect(() => {
