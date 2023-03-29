@@ -4,8 +4,11 @@ import request from 'request'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import cors from 'cors'
-import axios from 'axios'
-const pako = require('pako');
+// import axios from 'axios'
+// import zlib from 'zlib'
+
+
+
 require('dotenv').config();
 
 const app: Application = express();
@@ -15,8 +18,10 @@ const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
 app.use(cors({
-  origin: 'https://silver-macaron-ef4571.netlify.app'
+origin: 'http://127.0.0.1:5173'
+
 }));
+// origin: 'https://silver-macaron-ef4571.netlify.app'
 
 
 const authenticateToken = (req: any, res: any, next: any) => {
@@ -136,22 +141,23 @@ app.post('/api/user/login/', async (req, res) => {
 //     return res.status(200).send(body)
 //   })
 // })
-
-app.get('/api/product/page/:page_number', async (req, res) => {
+app.get('/api/product/page/:page_number', (req, res) => {
   const page_number = req.params.page_number;
-  try {
-    const response = await axios.get(`${process.env.SERVER_URL}/api/product/page/${page_number}`, {
-      responseType: 'arraybuffer',
-      headers: {
-        'Accept-Encoding': 'gzip',
-      },
-    });
-    const data = pako.ungzip(response.data, { to: 'string' });
-    res.status(200).send(data);
-  } catch (error) {
-    res.status(500).send(error);
-  }
+  const options = {
+    url: `${process.env.SERVER_URL}/api/product/page/${page_number}`,
+    method: 'GET',
+    json: true,
+    gzip: true // Add this line to enable gzip compression
+  };
+  request(options, (error, body) => {
+    if (error) {
+      return res.status(500).send(error);
+    }
+    return res.json(body);
+  });
 });
+
+
 
 
 app.get('/api/store/:id',authenticateToken, (req: any, res) => {

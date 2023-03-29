@@ -157,7 +157,7 @@ function App() {
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => response.json())
-      .then((result) => setProduct(result.body.data))
+      .then((result) => {setProduct(result.body)})
       .catch((error) => console.log("error", error));
   }, [currentPage]);
 
