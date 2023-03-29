@@ -57,7 +57,7 @@ const AdminPage = () => {
       )
         .then((response) => response.json())
         .then((result) => {
-          setStoreName(result?.store?.name);
+          setStoreName(result.store.name);
         })
         .catch((error) => console.log("error", error))
         .finally(() => {
@@ -70,11 +70,10 @@ const AdminPage = () => {
       fetchData(superId)
     } else {
       fetchData(loggedIn?.uniqueStoreId)
-    }
-    
+    } 
   }, [token, loggedIn, addedProductId, deletedProduct, updatedProduct, superId]);
 
-  if (storeProducts) {
+  if (storeProducts && storeName) {
     return (
       <>
         {loggedIn?.role !== "user" ? (

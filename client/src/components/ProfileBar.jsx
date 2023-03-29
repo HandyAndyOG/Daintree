@@ -23,7 +23,7 @@ const ProfileBar = () => {
       requestOptions
     )
       .then((response) => response.json())
-      .then((result) => setStoreName(result))
+      .then((result) => setStoreName(result.store.name))
       .catch((error) => console.log("error", error));
     navigate("/admin");
   };
