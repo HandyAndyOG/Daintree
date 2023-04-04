@@ -40,7 +40,7 @@ const ProfileBar = () => {
         </h1>
         {loggedIn?.role === "admin" ? (
           <button
-            className="ml-3 mr-3 align-middle p-1 rounded-full bg-white text-black ease-in-out duration-300 hover:bg-[#C8B8B4] hover:text-white shadow"
+            className="ml-1 mr-1 sm:ml-3 sm:mr-3 align-middle p-1 rounded-full bg-white text-black ease-in-out duration-300 hover:bg-[#C8B8B4] hover:text-white shadow"
             onClick={viewStore}
           >
             View Store
@@ -50,7 +50,7 @@ const ProfileBar = () => {
         )}
         {loggedIn?.role === "super-admin" ? (
           <button
-            className="ml-3 mr-3 align-middle p-1 rounded-full bg-[#C8B8B4] text-white ease-in-out duration-300 hover:bg-white hover:text-black shadow"
+            className="ml-1 mr-1 sm:ml-3 sm:mr-3 align-middle p-1 rounded-full bg-[#C8B8B4] text-white ease-in-out duration-300 hover:bg-white hover:text-black shadow"
             onClick={viewStores}
           >
             View All Stores

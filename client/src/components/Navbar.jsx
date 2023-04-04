@@ -78,12 +78,12 @@ function NavBar() {
         </div>
       </nav>
       {isHomePage ? (
-        <div className="flex flex-col ml-20 pb-8">
+        <div className="flex flex-col ml-10 sm:ml-20 pb-8">
           <h3 className="self-start p-4 text-xl">
             It's time to spoil yourself
           </h3>
-          <h1 className="self-start p-4 text-5xl leading-5">Get whatever</h1>
-          <h2 className="self-start p-4 text-5xl leading-5">
+          <h1 className="self-start p-4 text-4xl sm:text-5xl leading-5">Get whatever</h1>
+          <h2 className="self-start p-4 text-4xl sm:text-5xl leading-5">
             your heart desires.
           </h2>
         </div>

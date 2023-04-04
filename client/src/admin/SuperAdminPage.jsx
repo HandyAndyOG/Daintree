@@ -33,7 +33,7 @@ function SuperAdminPage() {
           Welcome Almighty SuperAdmin {currentUser}
         </header>
         <AddStoreForm />
-        <section className="grid grid-cols-4 mt-5 gap-4 px-4 py-4 bg-[#faf0e6] pt-5">
+        <section className="grid  sm:grid-cols-4 mt-5 gap-4 px-4 py-4 bg-[#faf0e6] pt-5">
           {stores.map((s) => {
             return <StoreOverview key={s.uniqueStoreId} storeInfo={s} />;
           })}

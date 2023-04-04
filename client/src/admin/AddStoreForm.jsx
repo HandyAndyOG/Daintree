@@ -38,7 +38,7 @@ const AddStoreForm = () => {
       })
   };
   return (
-    <section className="flex flex-col border rounded shadow p-4 w-1/2 items-center self-center mt-4 mb-4 leading-7">
+    <section className="flex flex-col border rounded shadow p-4 w-3/4 sm:w-1/2 items-center self-center mt-4 mb-4 leading-7">
       <h4 className="">Add new Store</h4>
       <form className="flex flex-col items-start">
         <label htmlFor={"name_input"}>Title</label>

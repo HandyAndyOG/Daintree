@@ -8,7 +8,7 @@ function Cart({ products, removeFromCart }) {
     return <h3>No items in cart, why not add some?</h3>;
   }
   return (
-    <section className="flex flex-row justify-center">
+    <section className="flex flex-col sm:flex-row justify-center">
       <div className="flex flex-col items-center">
         {products?.map((p) => {
           sumOfItems += Number(p?.price.replace(/\$/gm, "")) * p.amount;

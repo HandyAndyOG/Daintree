@@ -34,7 +34,7 @@ const LoginForm = () => {
   };
 
   return (
-    <section className="flex flex-col border rounded shadow p-4 w-1/2 items-center self-center mt-10">
+    <section className="flex flex-col border rounded shadow p-4 w-3/4 sm:w-1/2 items-center self-center mt-10">
       {loggedIn?.status === "success" ? (
         <button>Log Out</button>
       ) : (

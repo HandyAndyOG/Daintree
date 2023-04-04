@@ -77,7 +77,7 @@ const AdminPage = () => {
     return (
       <>
         {loggedIn?.role !== "user" ? (
-          <section className="flex flex-col">
+          <section className="flex flex-col mb-5">
             <header className="text-lg font-semibold p-2 mt-3">Welcome to the {storeName}</header>
             <AdminProductList
               products={storeProducts}

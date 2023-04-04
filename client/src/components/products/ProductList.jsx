@@ -32,7 +32,7 @@ function ProductList({products, addToCart}) {
     return (
         <>
             <Pagination />
-            <section className='grid grid-cols-4 gap-4 pl-20 pr-20 pb-10'>{
+            <section className='grid grid-cols-1 gap-2 pl-2 pr-2 sm:grid-cols-4 sm:gap-4 sm:pl-20 sm:pr-20 pb-10'>{
                 sortedProducts
                     ?.map((p) => {
                         return (

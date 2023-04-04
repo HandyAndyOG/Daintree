@@ -56,7 +56,7 @@ const AddProductForm = () => {
   };
 
   return (
-    <section className="flex flex-col border rounded shadow p-4 w-1/2 items-center">
+    <section className="flex flex-col border rounded shadow p-4 w-3/4 sm:w-1/2 items-center">
       <h4 className="text-lg">Add new Product</h4>
       <form className="flex flex-col items-start justify-center">
         <label className="" htmlFor={"title_input"}>
